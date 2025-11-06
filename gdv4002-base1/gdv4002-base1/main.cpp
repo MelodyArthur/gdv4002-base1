@@ -1,6 +1,7 @@
 #include "Engine.h"
 
 // Function prototypes
+void myUpdate(GLFWwindow* window, double tDelta);
 
 
 int main(void) {
@@ -43,7 +44,7 @@ int main(void) {
 	player2Object->size = glm::vec2(0.5f, 1.0f);//changes the size of player2
 
 		
-
+	setUpdateFunction(myUpdate);
 	
 
 	// Enter main loop - this handles update and render calls
@@ -55,5 +56,13 @@ int main(void) {
 	// return success :)
 	return 0;//hello
 }
+
+void myUpdate(GLFWwindow* window, double tDelta) 
+{
+	float player1RotationSpeed = glm::radians(90.0f);
+	GameObject2D* player1 = getObject("player1");
+	player1->orientation += player1RotationSpeed * tDelta;//tdelta ensures it runs at the same speed no matter what the frame rate is
+}
+
 
 

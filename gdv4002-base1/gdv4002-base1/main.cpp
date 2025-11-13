@@ -1,4 +1,6 @@
 #include "Engine.h"
+#include "Keys.h"
+#include <bitset>
 
 // Function prototypes
 float enemyPhase[3] = { 3.0f, 1.0f, 5.0f };//if you change these they'll change the starting position of the enemies
@@ -6,6 +8,7 @@ float enemyPhaseVelocity[3] = { glm::radians(90.0f),
 	glm::radians(180.0f),
 	glm::radians(240.0f)};//if you change these it'll change the speed of the enemies
 void myUpdate(GLFWwindow* window, double tDelta);
+void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 
 int main(void) {
@@ -55,6 +58,7 @@ int main(void) {
 
 	
 	setUpdateFunction(myUpdate);
+	setKeyboardHandler(myKeyboardHandler);
 	
 	listGameObjectKeys();//lists all game objects in the scene
 	listObjectCounts();//lists the number of game objects in the scene
@@ -76,8 +80,26 @@ void myUpdate(GLFWwindow* window, double tDelta) {
 
 		enemyPhase[i] += enemyPhaseVelocity[i] * tDelta;
 	}
+}
+void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	// Check if the key was just pressed
+	if (action == GLFW_PRESS) {
+
+		// now check which key was pressed...
+		switch (key)
+		{
+		case GLFW_KEY_ESCAPE:
+			// If escape is pressed tell GLFW we want to close the window(and quit)
+			glfwSetWindowShouldClose(window, true);
+			break;
+		case GLFW_KEY_W:
+			printf("w pressed\n");
+			break;
+		}
 
 
+	}
 }
 
 

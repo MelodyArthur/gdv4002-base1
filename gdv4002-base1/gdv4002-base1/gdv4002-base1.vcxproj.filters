@@ -16,6 +16,12 @@
     <Filter Include="Engine">
       <UniqueIdentifier>{84855feb-8d03-4d9e-a7b0-0ef0c05489c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="My Classes">
+      <UniqueIdentifier>{2a7fbbd0-f75a-4930-9058-ebd0e0b53098}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="My Enemies">
+      <UniqueIdentifier>{84da36be-bb66-410e-920c-9f0e659e4d64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -38,6 +44,15 @@
     </ClCompile>
     <ClCompile Include="GameObject2D.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="presection 7.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemies.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +79,12 @@
     </ClInclude>
     <ClInclude Include="Keys.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>My Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>My Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

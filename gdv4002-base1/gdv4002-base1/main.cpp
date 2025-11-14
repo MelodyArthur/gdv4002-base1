@@ -1,23 +1,23 @@
 #include "Engine.h"
-#include "Keys.h"
-#include <bitset>
+#include "Keys.h" // setup in chapter 6
+#include "Player.h"
+#include "Enemy.h"
 
 // Function prototypes
-float enemyPhase[3] = { 3.0f, 1.0f, 5.0f };//if you change these they'll change the starting position of the enemies
-float enemyPhaseVelocity[3] = { glm::radians(90.0f),
-	glm::radians(180.0f),
-	glm::radians(240.0f)};//if you change these it'll change the speed of the enemies
-void myUpdate(GLFWwindow* window, double tDelta);
-void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods);
-std::bitset<5> keys{ 0x0 };//bitset to hold key states
-const float pi = 3.14159265359f;
+void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods); // setup in chapter 6
+
+
+// Globals
+
+
+// Bit flags to track which keys are currently pressed - setup in chapter 6
+std::bitset<5> keys{ 0x0 };
 
 
 int main(void) {
-	
 
 	// Initialise the engine (create window, setup OpenGL backend)
-	int initResult = engineInit("GDV4002 - Applied Maths for Games", 1024, 1024);
+	int initResult = engineInit("GDV4002 - Applied Maths for Games", 512, 512, 5.0f);
 
 	// If the engine initialisation failed report error and exit
 	if (initResult != 0) {
@@ -25,45 +25,31 @@ int main(void) {
 		printf("Cannot setup game window!!!\n");
 		return initResult; // exit if setup failed
 	}
-	
-	//game objects for pre excersize 5
-	// Setup game scene objects here
-	//
-	//GameObject2D* player1Object = getObject("player1");//retrieves the player object
-	//if (player1Object != nullptr) 
-	//{
-	//	printf("Player1 position: x=%f, y=%f\n", player1Object->position.x, player1Object->position.y);
-	//}
-	//addObject("player1",//defines the player object
-	//	glm::vec2(1.0f, 1.0f),//initial position
-	//	45.0f * pi / 180.0f,//initial rotation in radians
-	//	glm::vec2(0.5f, 1.0f),//changes the size of the object
-	//	"Resources\\Textures\\mcblock01.png",//adds a texture to the object
-	//	TextureProperties::NearestFilterTexture());//changes the texture properties
+
+	// Setup game objects
+	//Player Object using name and pointer to an existing object
+	GLuint playerTexture = loadTexture("Resources\\Textures\\player1_ship.png");
+	Player* mainPlayer = new Player(glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), playerTexture, 1.0f);
+	addObject("player", mainPlayer);
+
+	//Enemy Objects using name and pointer to an existing object
+	// 1. Load enemy texture 
+	GLuint enemyTexture = loadTexture("Resources\\Textures\\alien01.png");
+	// 2. Create enemy objects
+	Enemy* enemy1 = new Enemy(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(45.0f));
+	Enemy* enemy2 = new Enemy(glm::vec2(1.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(90.0f));
+	Enemy* enemy3 = new Enemy(glm::vec2(2.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(60.0f));
+	// Add enemy objects to the engine
+	addObject("enemy1", enemy1);
+	addObject("enemy2", enemy2);
+	addObject("enemy3", enemy3);
 
 
-	//addObject("player2");
-	//GameObject2D* player2Object = getObject("player2");//retrieves the player2 object
-	//if (player2Object != nullptr) {
-	//	printf("Player2 position: x=%f, y=%f\n", player2Object->position.x, player2Object->position.y);
-	//	player2Object->textureID = loadTexture("Resources\\Textures\\bumblebee.png");//adds a texture to player2
-	//}
-	//player2Object->position = glm::vec2(-1.0f, 1.0f);//changes the position of player2
-	//player2Object->orientation = -45.0f * pi / 180.0f;//changes the rotation of player2
-	//player2Object->size = glm::vec2(0.5f, 1.0f);//changes the size of player2
 
-	//game objects from 5 forwards
-	addObject("player", glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), "Resources\\Textures\\player1_ship.png");
-	addObject("enemy", glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.75f, 0.75f), "Resources\\Textures\\alien01.png");
-	addObject("enemy", glm::vec2(1.0f, 0.0f), 0.0f, glm::vec2(0.75f, 0.75f), "Resources\\Textures\\alien01.png");
-	addObject("enemy", glm::vec2(2.0f, 0.0f), 0.0f, glm::vec2(0.75f, 0.75f), "Resources\\Textures\\alien01.png");
-
-	
-	setUpdateFunction(myUpdate);
+	// Setup event handlers
 	setKeyboardHandler(myKeyboardHandler);
-	
-	listGameObjectKeys();//lists all game objects in the scene
-	listObjectCounts();//lists the number of game objects in the scene
+
+
 	// Enter main loop - this handles update and render calls
 	engineMainLoop();
 
@@ -73,54 +59,12 @@ int main(void) {
 	// return success :)
 	return 0;
 }
-void myUpdate(GLFWwindow* window, double tDelta) 
-{
-	// Update enemy positions
-	GameObjectCollection enemies = getObjectCollection("enemy");
-	for (int i = 0; i < enemies.objectCount; i++) 
-	{
-		enemies.objectArray[i]->position.y = sinf(enemyPhase[i]); // assume phase stored in radians so no conversion needed
-		enemyPhase[i] += enemyPhaseVelocity[i] * tDelta;
-	}
 
-	// Update player position based on key states
-	static float playerSpeed = 1.0f; // distance per second
-	static float rotationSpeed = glm::radians(90.0f); // radians per second (adjust as desired)
-	
-	GameObject2D* player = getObject("player");
-	if (player == nullptr) return;
-
-	//Actually moving the player
-	if (keys.test(Key::W) == true)
-	{
-		//cosf(angle) gives the X component, sinf(angle) gives the Y component — together they form the unit forward direction
-		glm::vec2 forward = glm::vec2(cosf(player->orientation), sinf(player->orientation)); 
-		player->position += forward * playerSpeed * (float)tDelta; // move forward in facing direction
-	}
-	if (keys.test(Key::S) == true) 
-	{
-		glm::vec2 forward = glm::vec2(cosf(player->orientation), sinf(player->orientation));
-		player->position -= forward * playerSpeed * (float)tDelta; // move forward in facing direction
-
-	}
-	if (keys.test(Key::A) == true)
-	{
-		player->position.x -= playerSpeed * (float)tDelta;//moves the player left
-		player->orientation += rotationSpeed * (float)tDelta;//changes the rotation of the player while A is held
-	}
-	if (keys.test(Key::D) == true)
-	{
-		player->position.x += playerSpeed * (float)tDelta;//Moves the player right
-		player->orientation -= rotationSpeed * (float)tDelta;//changes the rotation of the player while D is held
-	}
-
-
-}
 void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	// Check if the key was just pressed
-	if (action == GLFW_PRESS) {
-
+	//Check if the key was just pressed
+	if (action == GLFW_PRESS) 
+	{
 		// now check which key was pressed...
 		switch (key)
 		{
@@ -141,10 +85,9 @@ void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, in
 		case GLFW_KEY_D:
 			keys[Key::D] = true;
 			break;
-		
 		}
-
 	}
+	//Check if the key was just released
 	if (action == GLFW_RELEASE)
 	{
 		switch (key)
@@ -163,19 +106,9 @@ void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, in
 			break;
 
 		}
-
 	}
 }
 
-
-
-//update function for pre excercise 5
-//void myUpdate(GLFWwindow* window, double tDelta)
-//{
-//	float player1RotationSpeed = glm::radians(90.0f);
-//	GameObject2D* player1 = getObject("player1");
-//	player1->orientation += player1RotationSpeed * tDelta;//tdelta ensures it runs at the same speed no matter what the frame rate is
-//}
 
 
 

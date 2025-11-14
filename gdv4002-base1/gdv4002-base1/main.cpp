@@ -9,10 +9,11 @@ float enemyPhaseVelocity[3] = { glm::radians(90.0f),
 	glm::radians(240.0f)};//if you change these it'll change the speed of the enemies
 void myUpdate(GLFWwindow* window, double tDelta);
 void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods);
-
+std::bitset<5> keys{ 0x0 };//bitset to hold key states
+const float pi = 3.14159265359f;
 
 int main(void) {
-	const float pi = 3.14159265359f;
+	
 
 	// Initialise the engine (create window, setup OpenGL backend)
 	int initResult = engineInit("GDV4002 - Applied Maths for Games", 1024, 1024);
@@ -71,15 +72,39 @@ int main(void) {
 	// return success :)
 	return 0;
 }
-void myUpdate(GLFWwindow* window, double tDelta) {
-
+void myUpdate(GLFWwindow* window, double tDelta) 
+{
+	// Update enemy positions
 	GameObjectCollection enemies = getObjectCollection("enemy");
-	for (int i = 0; i < enemies.objectCount; i++) {
-
+	for (int i = 0; i < enemies.objectCount; i++) 
+	{
 		enemies.objectArray[i]->position.y = sinf(enemyPhase[i]); // assume phase stored in radians so no conversion needed
-
 		enemyPhase[i] += enemyPhaseVelocity[i] * tDelta;
 	}
+
+	// Update player position based on key states
+	static float playerSpeed = 1.0f; // distance per second
+	GameObject2D* player = getObject("player");
+	if (keys.test(Key::W) == true) 
+	{
+		player->position.y += playerSpeed * (float)tDelta;//moves player up when W is pressed at the same speed no matter the frame rate
+	}
+	if (keys.test(Key::S) == true) 
+	{
+		player->position.y -= playerSpeed * (float)tDelta;//Moves the player down when s is pressed
+	}
+	if (keys.test(Key::A) == true)
+	{
+		player->position.x -= playerSpeed * (float)tDelta;//moves the player left
+		player->orientation = -45.0f * pi / 180.0f;//changes the rotation of player2
+	}
+	if (keys.test(Key::D) == true)
+	{
+		player->position.x += playerSpeed * (float)tDelta;//Moves the player right
+
+	}
+
+
 }
 void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -94,10 +119,40 @@ void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, in
 			glfwSetWindowShouldClose(window, true);
 			break;
 		case GLFW_KEY_W:
-			printf("w pressed\n");
+			//printf("w pressed\n");//notifies that the function is working
+			keys[Key::W] = true;//moves player when key is pressed
 			break;
+		case GLFW_KEY_S:
+			keys[Key::S] = true;
+			break;
+		case GLFW_KEY_A:
+			keys[Key::A] = true;
+			break;
+		case GLFW_KEY_D:
+			keys[Key::D] = true;
+			break;
+		
 		}
 
+	}
+	if (action == GLFW_RELEASE)
+	{
+		switch (key)
+		{
+		case GLFW_KEY_W:
+			keys[Key::W] = false;//stops movement when key is released
+			break;
+		case GLFW_KEY_S:
+			keys[Key::S] = false;
+			break;
+		case GLFW_KEY_A:
+			keys[Key::A] = false;
+			break;
+		case GLFW_KEY_D:
+			keys[Key::D] = false;
+			break;
+
+		}
 
 	}
 }

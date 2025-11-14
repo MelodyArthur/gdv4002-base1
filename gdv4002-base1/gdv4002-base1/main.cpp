@@ -12,6 +12,7 @@ void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, in
 std::bitset<5> keys{ 0x0 };//bitset to hold key states
 const float pi = 3.14159265359f;
 
+
 int main(void) {
 	
 
@@ -84,24 +85,33 @@ void myUpdate(GLFWwindow* window, double tDelta)
 
 	// Update player position based on key states
 	static float playerSpeed = 1.0f; // distance per second
+	static float rotationSpeed = glm::radians(90.0f); // radians per second (adjust as desired)
+	
 	GameObject2D* player = getObject("player");
-	if (keys.test(Key::W) == true) 
+	if (player == nullptr) return;
+
+	//Actually moving the player
+	if (keys.test(Key::W) == true)
 	{
-		player->position.y += playerSpeed * (float)tDelta;//moves player up when W is pressed at the same speed no matter the frame rate
+		//cosf(angle) gives the X component, sinf(angle) gives the Y component — together they form the unit forward direction
+		glm::vec2 forward = glm::vec2(cosf(player->orientation), sinf(player->orientation)); 
+		player->position += forward * playerSpeed * (float)tDelta; // move forward in facing direction
 	}
 	if (keys.test(Key::S) == true) 
 	{
-		player->position.y -= playerSpeed * (float)tDelta;//Moves the player down when s is pressed
+		glm::vec2 forward = glm::vec2(cosf(player->orientation), sinf(player->orientation));
+		player->position -= forward * playerSpeed * (float)tDelta; // move forward in facing direction
+
 	}
 	if (keys.test(Key::A) == true)
 	{
 		player->position.x -= playerSpeed * (float)tDelta;//moves the player left
-		player->orientation = -45.0f * pi / 180.0f;//changes the rotation of player2
+		player->orientation += rotationSpeed * (float)tDelta;//changes the rotation of the player while A is held
 	}
 	if (keys.test(Key::D) == true)
 	{
 		player->position.x += playerSpeed * (float)tDelta;//Moves the player right
-
+		player->orientation -= rotationSpeed * (float)tDelta;//changes the rotation of the player while D is held
 	}
 
 

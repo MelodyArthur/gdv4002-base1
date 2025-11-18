@@ -17,7 +17,7 @@ std::bitset<5> keys{ 0x0 };
 int main(void) {
 
 	// Initialise the engine (create window, setup OpenGL backend)
-	int initResult = engineInit("GDV4002 - Applied Maths for Games", 512, 512, 5.0f);
+	int initResult = engineInit("GDV4002 - Applied Maths for Games", 512, 512, 10.0f);
 
 	// If the engine initialisation failed report error and exit
 	if (initResult != 0) {

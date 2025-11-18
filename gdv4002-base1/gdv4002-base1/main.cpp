@@ -29,7 +29,7 @@ int main(void) {
 	// Setup game objects
 	//Player Object using name and pointer to an existing object
 	GLuint playerTexture = loadTexture("Resources\\Textures\\player1_ship.png");
-	Player* mainPlayer = new Player(glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), playerTexture, 1.0f);
+	Player* mainPlayer = new Player(glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), playerTexture, 2.5f);
 	addObject("player", mainPlayer);
 
 	//Enemy Objects using name and pointer to an existing object

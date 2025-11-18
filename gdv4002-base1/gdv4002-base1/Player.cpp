@@ -39,14 +39,22 @@ void Player::update(double tDelta)
 	// add gravity
 	F += gravity;
 	// simple floor collision
-	if (position.y < -getViewplaneHeight() / 2.0f) 
+	if (position.y < -getViewplaneHeight() / 2.0f) //this checks if the player is below the floor
 	{
-		F += glm::vec2(0.0f, 20.0f);
+		F += glm::vec2(0.0f, 20.0f);//if so, apply a big upward force
 	}
-	if (position.x < -getViewplaneWidth() / 2.0f)
+	if (position.x < -getViewplaneWidth() / 2.0f)//
 	{
 		F += glm::vec2(20.0f, 0.0f);
 	}
+	if (position.y > getViewplaneHeight() / 2.0f)//all signs need to be reversed bc origin is in center
+	{
+		F += glm::vec2(0.0f, -5.0f);
+	}
+	if (position.x > getViewplaneWidth() / 2.0f)
+	{
+		F += glm::vec2(-10.0f, 0.0f);
+	}//ask how i stop it bouncing so far
 	
 
 	// 2. calculate acceleration.  If f=ma, a = f/m

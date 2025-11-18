@@ -1,8 +1,10 @@
 #include "Player.h"
 #include "Keys.h"
 #include <bitset>
+#include "Engine.h"
 
 extern std::bitset<5> keys; //extern means it can be found in another file
+extern glm::vec2 gravity;
 
 // Constructor
 Player::Player(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize, GLuint initTextureID, float mass) : GameObject2D(initPosition, initOrientation, initSize, initTextureID) {
@@ -34,6 +36,19 @@ void Player::update(double tDelta)
 	{
 		F += glm::vec2(thrust, 0.0f);
 	}
+	// add gravity
+	F += gravity;
+	// simple floor collision
+	if (position.y < -getViewplaneHeight() / 2.0f) 
+	{
+		F += glm::vec2(0.0f, 20.0f);
+	}
+	if (position.x < -getViewplaneWidth() / 2.0f)
+	{
+		F += glm::vec2(20.0f, 0.0f);
+	}
+	
+
 	// 2. calculate acceleration.  If f=ma, a = f/m
 	glm::vec2 a = F * (1.0f / mass);
 	// 3. integate to get new velocity

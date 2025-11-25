@@ -17,7 +17,7 @@ void Bullet::update(double tDelta)
 	// Optionally, you could add code here to remove the bullet if it goes off-screen
 	if (position.x > getViewplaneHeight() / 4.0f)
 	{
-		deleteObject("bullet");//but what is the key???
+		deleteObject("bullet");//need to delete bullets with unique keys
 	}
 	else if (position.x < -getViewplaneHeight() / 2.0f)
 	{

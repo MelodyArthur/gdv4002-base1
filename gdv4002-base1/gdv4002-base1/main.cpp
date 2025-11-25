@@ -10,12 +10,14 @@ void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, in
 // Globals
 std::bitset<5> keys{ 0x0 };
 Player* mainPlayer = nullptr;
+//float ppositionx = getObject("player")->position.x;
+//float ppositiony = getObject("player")->position.y;
 
 void spawnBullet()
 {
 	static int bulletCounter = 0;
 	GLuint bulletTexture = loadTexture("Resources\\Textures\\player1_ship.png");
-	glm::vec2 spawnPos = glm::vec2(0.0f, -0.3f);
+	glm::vec2 spawnPos = glm::vec2(0.0f,0.3f);
 	if (mainPlayer) 
 	{
 		spawnPos = mainPlayer->position;
@@ -54,6 +56,7 @@ int main(void)
 	engineMainLoop();// Enter main loop - this handles update and render calls
 	engineShutdown();// When we quit (close window for example), clean up engine resources
 
+	listGameObjectKeys();//list all object keys in engine
 	return 0;
 }
 

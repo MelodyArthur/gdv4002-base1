@@ -16,6 +16,12 @@
     <Filter Include="Engine">
       <UniqueIdentifier>{84855feb-8d03-4d9e-a7b0-0ef0c05489c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Asteroids">
+      <UniqueIdentifier>{4d218a47-bb88-4735-bcf0-e68815f4afaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ship">
+      <UniqueIdentifier>{a05336ca-3e2c-4cff-a421-fe914f5c14be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -39,6 +45,12 @@
     <ClCompile Include="GameObject2D.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="Asteroids.cpp">
+      <Filter>Asteroids</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -61,6 +73,15 @@
     </ClInclude>
     <ClInclude Include="GameObject2D.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Asteroids.h">
+      <Filter>Asteroids</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="Keys.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

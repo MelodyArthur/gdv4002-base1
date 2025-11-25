@@ -1,4 +1,5 @@
 #include "Asteroids.h"
+#include "Engine.h"
 
 Enemy::Enemy(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize,GLuint initTextureID,float initialPhase,float initialPhaseVelocity): GameObject2D(initPosition, initOrientation, initSize, initTextureID) 
 {
@@ -15,5 +16,22 @@ void Enemy::update(double tDelta)
 
 	// Update phaseAngle based on velocity * time elapsed
 	phaseAngle += phaseVelocity * tDelta;
+
+	if (position.x > getViewplaneHeight() / 2.0f)
+	{
+		position.x = (- getViewplaneHeight() / 2.0f) - 1;
+	}
+	else if (position.x < - getViewplaneHeight() / 2.0f)
+	{
+		position.x = (getViewplaneHeight() / 2.0f) + 1;
+	}
+	else if (position.y < - getViewplaneHeight() / 2.0f)
+	{
+		position.y = (getViewplaneHeight() / 2.0f) + 1;
+	}
+	else if (position.y > getViewplaneHeight() / 2.0f)
+	{
+		position.y = (- getViewplaneHeight() / 2.0f) - 1;
+	}
 }
 //orientation += glm::radians(145.0f) * (float)tDelta;

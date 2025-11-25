@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Asteroids.h"
+#include "Bullet.h"
 #include "Engine.h"
 #include "Keys.h" 
 #include <bitset>
@@ -32,6 +33,11 @@ int main(void)
 	addObject("enemy1", enemy1);
 	addObject("enemy2", enemy2);
 	addObject("enemy3", enemy3);//add enemy objects to engine
+
+	//create bullet objects
+	GLuint bulletTexture = loadTexture("Resources\\Textures\\player1_ship.png");
+	Bullet* bullet1 = new Bullet(glm::vec2(-5.0f, -5.0f), 0.0f, glm::vec2(0.2f, 0.2f), bulletTexture, 0.0f, 0.0f);
+	addObject("bullet1", bullet1);
 
 
 	// Setup event handlers

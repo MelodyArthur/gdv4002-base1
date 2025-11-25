@@ -19,7 +19,7 @@ void Enemy::update(double tDelta)
 
 	if (position.x > getViewplaneHeight() / 2.0f)
 	{
-		position.x = (- getViewplaneHeight() / 2.0f) - 1;
+		position.x = (-getViewplaneHeight() / 2.0f) - 1;//add a little offset so it doesnt immediately wrap back
 	}
 	else if (position.x < - getViewplaneHeight() / 2.0f)
 	{

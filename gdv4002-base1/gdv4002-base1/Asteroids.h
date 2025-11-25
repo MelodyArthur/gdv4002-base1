@@ -7,10 +7,11 @@ class Enemy : public GameObject2D {
 private:
 	float		phaseAngle; // in radians
 	float		phaseVelocity; // angle change per second
+	glm::vec2	accel; // acceleration vector for enemy
 
 public:
 	Enemy(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize, GLuint initTextureID, float initialPhase, float initialPhaseVelocity);
 
-	//void Enemy::update(double tDelta) override;
+	void update(double tDelta) override;
 
 };

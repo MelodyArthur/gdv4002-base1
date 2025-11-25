@@ -1,39 +1,30 @@
 #include "Player.h"
 #include "Asteroids.h"
 #include "Engine.h"
-#include "Keys.h" // setup in chapter 6
+#include "Keys.h" 
 #include <bitset>
 
 // Function prototypes
-void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods); // setup in chapter 6
-
-
+void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods); 
 // Globals
 std::bitset<5> keys{ 0x0 };
 
-
-
-int main(void) {
-
-	// Initialise the engine (create window, setup OpenGL backend)
-	int initResult = engineInit("GDV4002 - Applied Maths for Games", 512, 512, 5.0f);
-
-	// If the engine initialisation failed report error and exit
-	if (initResult != 0) {
-
+int main(void) 
+{
+	int initResult = engineInit("GDV4002 - Applied Maths for Games", 512, 512, 10.0f);//create the window
+	if (initResult != 0) 
+	{
 		printf("Cannot setup game window!!!\n");
 		return initResult; // exit if setup failed
 	}
 
-	// Setup game objects
+	//------------------------------Game Objects--------------------------------
 	// Create a player object and add it to the engine
 	GLuint playerTexture = loadTexture("Resources\\Textures\\player1_ship.png");
-	Player* mainPlayer = new Player(glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), playerTexture, 5.0f);
+	Player* mainPlayer = new Player(glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), playerTexture, 1.0f);
 	addObject("player", mainPlayer);
 
-
 	// Create an enemy object and add it to the engine
-	// 1. Load enemy texture 
 	GLuint enemyTexture = loadTexture("Resources\\Textures\\alien01.png");//texture
 	Enemy* enemy1 = new Enemy(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(45.0f));
 	Enemy* enemy2 = new Enemy(glm::vec2(1.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(90.0f));
@@ -45,24 +36,18 @@ int main(void) {
 
 	// Setup event handlers
 	setKeyboardHandler(myKeyboardHandler);
+	engineMainLoop();// Enter main loop - this handles update and render calls
+	engineShutdown();// When we quit (close window for example), clean up engine resources
 
-
-	// Enter main loop - this handles update and render calls
-	engineMainLoop();
-
-	// When we quit (close window for example), clean up engine resources
-	engineShutdown();
-
-	// return success :)
 	return 0;
 }
 
+//----------------------------boring keyboard stuff-------------------------
 void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	// Check if the key was just pressed
-	if (action == GLFW_PRESS) {
-
-		// now check which key was pressed...
+	
+	if (action == GLFW_PRESS) 
+	{
 		switch (key)
 		{
 		case GLFW_KEY_ESCAPE:
@@ -82,8 +67,6 @@ void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, in
 			keys[Key::D] = true;
 			break;
 		}
-		
-
 	}
 	// If not pressed, check the key has just been released
 	else if (action == GLFW_RELEASE) 
@@ -103,7 +86,6 @@ void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, in
 			keys[Key::D] = false;
 			break;
 		}
-
 	}
 }
 

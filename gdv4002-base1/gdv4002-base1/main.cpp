@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Asteroids.h"
 #include "Engine.h"
 #include "Keys.h" // setup in chapter 6
 #include <bitset>
@@ -27,11 +28,20 @@ int main(void) {
 	// Setup game objects
 	// Create a player object and add it to the engine
 	GLuint playerTexture = loadTexture("Resources\\Textures\\player1_ship.png");
-	Player* mainPlayer = new Player(glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), playerTexture, 1.0f);
+	Player* mainPlayer = new Player(glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), playerTexture, 5.0f);
 	addObject("player", mainPlayer);
 
 
 	// Create an enemy object and add it to the engine
+	// 1. Load enemy texture 
+	GLuint enemyTexture = loadTexture("Resources\\Textures\\alien01.png");//texture
+	Enemy* enemy1 = new Enemy(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(45.0f));
+	Enemy* enemy2 = new Enemy(glm::vec2(1.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(90.0f));
+	Enemy* enemy3 = new Enemy(glm::vec2(2.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(60.0f));//enemy objects
+	addObject("enemy1", enemy1);
+	addObject("enemy2", enemy2);
+	addObject("enemy3", enemy3);//add enemy objects to engine
+
 
 	// Setup event handlers
 	setKeyboardHandler(myKeyboardHandler);

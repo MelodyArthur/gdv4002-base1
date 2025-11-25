@@ -9,6 +9,21 @@
 void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods); 
 // Globals
 std::bitset<5> keys{ 0x0 };
+Player* mainPlayer = nullptr;
+
+void spawnBullet()
+{
+	static int bulletCounter = 0;
+	GLuint bulletTexture = loadTexture("Resources\\Textures\\player1_ship.png");
+	glm::vec2 spawnPos = glm::vec2(0.0f, -0.3f);
+	if (mainPlayer) 
+	{
+		spawnPos = mainPlayer->position;
+	}
+	Bullet* bullet = new Bullet(spawnPos, 0.0f, glm::vec2(0.1f, 0.1f), bulletTexture);
+	std::string name = "bullet" + std::to_string(++bulletCounter);
+	addObject(name.c_str(), bullet);
+}
 
 int main(void) 
 {
@@ -33,11 +48,6 @@ int main(void)
 	addObject("enemy1", enemy1);
 	addObject("enemy2", enemy2);
 	addObject("enemy3", enemy3);//add enemy objects to engine
-
-	//create bullet objects
-	GLuint bulletTexture = loadTexture("Resources\\Textures\\player1_ship.png");
-	Bullet* bullet = new Bullet(glm::vec2(0.0f, -0.3f), 0.0f, glm::vec2(0.1f, 0.1f), bulletTexture);
-	addObject("bullet", bullet);
 
 	// Setup event handlers
 	setKeyboardHandler(myKeyboardHandler);
@@ -70,6 +80,9 @@ void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, in
 			break;
 		case GLFW_KEY_D:
 			keys[Key::D] = true;
+			break;
+		case GLFW_KEY_SPACE:
+			spawnBullet();
 			break;
 		}
 	}

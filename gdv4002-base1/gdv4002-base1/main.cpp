@@ -36,9 +36,8 @@ int main(void)
 
 	//create bullet objects
 	GLuint bulletTexture = loadTexture("Resources\\Textures\\player1_ship.png");
-	Bullet* bullet1 = new Bullet(glm::vec2(-5.0f, -5.0f), 0.0f, glm::vec2(0.2f, 0.2f), bulletTexture, 0.0f, 0.0f);
-	addObject("bullet1", bullet1);
-
+	Bullet* bullet = new Bullet(glm::vec2(0.0f, -0.3f), 0.0f, glm::vec2(0.1f, 0.1f), bulletTexture);
+	addObject("bullet", bullet);
 
 	// Setup event handlers
 	setKeyboardHandler(myKeyboardHandler);

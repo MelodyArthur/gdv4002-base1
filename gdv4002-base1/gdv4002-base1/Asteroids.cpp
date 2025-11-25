@@ -3,8 +3,8 @@
 
 Enemy::Enemy(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize,GLuint initTextureID,float initialPhase,float initialPhaseVelocity): GameObject2D(initPosition, initOrientation, initSize, initTextureID) 
 {
-	phaseAngle = initialPhase;
-	phaseVelocity = initialPhaseVelocity;
+	phaseAngle = initialPhase;//The phase angle to control where we were on the sin wave
+	phaseVelocity = initialPhaseVelocity;//The velocity of the phase angle – how much the phase angle changes per second, which controls the speed of the enemy movement / oscillation.
 }
 void Enemy::update(double tDelta) 
 {

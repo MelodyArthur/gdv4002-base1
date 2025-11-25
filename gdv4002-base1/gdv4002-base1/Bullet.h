@@ -2,16 +2,14 @@
 #include "GameObject2D.h"
 #include <glm/glm.hpp>
 
-class Bullet : public GameObject2D {
-
+class Bullet : public GameObject2D 
+{
 private:
-	float		phaseAngle; // in radians
-	float		phaseVelocity; // angle change per second
-	//glm::vec2	accel; // acceleration vector for enemy
 
 public:
-	Bullet(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize, GLuint initTextureID, float initialPhase, float initialPhaseVelocity);
+	Bullet(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize, GLuint initTextureID);
 
 	void update(double tDelta) override;
-
 };
+
+

@@ -40,12 +40,12 @@ int main(void)
 	//------------------------------Game Objects--------------------------------
 	// Create a player object and add it to the engine
 	GLuint playerTexture = loadTexture("Resources\\Textures\\player1_ship.png");
-	Player* mainPlayer = new Player(glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), playerTexture, 1.0f);
+	mainPlayer = new Player(glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), playerTexture, 1.0f);
 	addObject("player", mainPlayer);
 	
 
 	// Create an enemy object and add it to the engine
-	GLuint enemyTexture = loadTexture("Resources\\Textures\\alien01.png");//texture
+	GLuint enemyTexture = loadTexture("Resources\\Textures\\Asteroid.jpg");//texture
 	Enemy* enemy1 = new Enemy(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(25.0f));
 	Enemy* enemy2 = new Enemy(glm::vec2(1.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(30.0f));
 	Enemy* enemy3 = new Enemy(glm::vec2(2.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(60.0f));//enemy objects

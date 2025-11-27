@@ -15,10 +15,10 @@ void Bullet::update(double tDelta)
 	position.x += cos(orientation) * speed * (float)tDelta;
 	position.y += sin(orientation) * speed * (float)tDelta;
 	
-	// Optionally, you could add code here to remove the bullet if it goes off-screen
+	//add code here to remove the bullet if it goes off-screen
 	if (position.x > getViewplaneHeight() / 4.0f)
 	{
-		deleteObject("bullet");//need to delete bullets with unique keys
+		//deleteObject("bullet");//need to delete bullets with unique keys
 	}
 	else if (position.x < -getViewplaneHeight() / 2.0f)
 	{

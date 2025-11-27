@@ -17,13 +17,16 @@ Player* mainPlayer = nullptr;
 void spawnBullet()
 {
 	static int bulletCounter = 0;
-	GLuint bulletTexture = loadTexture("Resources\\Textures\\player1_ship.png");
+	GLuint bulletTexture = loadTexture("Resources\\Textures\\bullet.png");
 	glm::vec2 spawnPos = glm::vec2(0.0f, 0.3f);//need to somehow get player position and orientation
+	float forward = 0.0f;
 	if (mainPlayer) 
 	{
 		spawnPos = mainPlayer->position;
+		forward = mainPlayer ->orientation;
+
 	}
-	Bullet* bullet = new Bullet(spawnPos, 0.0f, glm::vec2(0.1f, 0.1f), bulletTexture);
+	Bullet* bullet = new Bullet(spawnPos, forward, glm::vec2(0.1f, 0.1f), bulletTexture);
 	std::string name = "bullet" + std::to_string(++bulletCounter);
 	addObject(name.c_str(), bullet);
 }

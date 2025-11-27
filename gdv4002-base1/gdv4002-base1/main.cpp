@@ -49,9 +49,9 @@ int main(void)
 
 	// Create an enemy object and add it to the engine
 	GLuint enemyTexture = loadTexture("Resources\\Textures\\Asteroid.jpg");//texture
-	Enemy* enemy1 = new Enemy(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(25.0f));
-	Enemy* enemy2 = new Enemy(glm::vec2(1.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(30.0f));
-	Enemy* enemy3 = new Enemy(glm::vec2(2.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(60.0f));//enemy objects
+	Enemy* enemy1 = new Enemy(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 2.0f);
+	Enemy* enemy2 = new Enemy(glm::vec2(1.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 2.0f);
+	Enemy* enemy3 = new Enemy(glm::vec2(2.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 2.0f);//enemy objects
 	addObject("enemy1", enemy1);
 	addObject("enemy2", enemy2);
 	addObject("enemy3", enemy3);//add enemy objects to engine

@@ -1,22 +1,20 @@
 #include "Asteroids.h"
 #include "Engine.h"
 
-Enemy::Enemy(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize,GLuint initTextureID,float initialPhase,float initialPhaseVelocity): GameObject2D(initPosition, initOrientation, initSize, initTextureID) 
+Enemy::Enemy(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize,GLuint initTextureID,float mass): GameObject2D(initPosition, initOrientation, initSize, initTextureID) 
 {
-	phaseAngle = initialPhase;//The phase angle to control where we were on the sin wave
-	phaseVelocity = initialPhaseVelocity;//The velocity of the phase angle – how much the phase angle changes per second, which controls the speed of the enemy movement / oscillation.
+	this->mass = mass;
+	velocity = glm::vec2(0.0f, 0.0f); // default to 0 velocity
 }
 void Enemy::update(double tDelta) 
 {
-	//need to get the acceleration of each enemy because theyre all different (last thing in brackets when adding them in)
-	//phaseVelocity = phaseVelocity + phaseAngle.y * (float)tDelta; // integrate to get new velocity (use y component)
-	//position = position + (phaseAngle * (float)tDelta); // integrate to get new position
-	// Set position based on phaseAngle
-	position.y = tanf(phaseAngle);
+	//glm::vec2 a = F * (1.0f / mass);//calculate acceleration.If f = ma, a = f / m
+	//velocity = velocity + (a * (float)tDelta);//integate to get new velocity
+	//position = position + (velocity * (float)tDelta);//integrate to get new position
 
-	// Update phaseAngle based on velocity * time elapsed
-	phaseAngle += phaseVelocity * tDelta;
+	orientation += glm::radians(145.0f) * (float)tDelta;
 
+	// make the enemy wrap around the screen
 	if (position.x > getViewplaneHeight() / 2.0f)
 	{
 		position.x = (-getViewplaneHeight() / 2.0f) - 1;//add a little offset so it doesnt immediately wrap back

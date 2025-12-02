@@ -25,6 +25,9 @@
     <Filter Include="Bullets">
       <UniqueIdentifier>{a2c5ef96-3224-4679-a623-549bfe2523e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Emitter">
+      <UniqueIdentifier>{432004f7-57cc-4076-a788-fa8081344ca3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -56,6 +59,9 @@
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="Emitter.cpp">
+      <Filter>Emitter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="Emitter.h">
+      <Filter>Emitter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

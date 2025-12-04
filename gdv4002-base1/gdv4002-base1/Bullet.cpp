@@ -2,10 +2,13 @@
 #include "Bullet.h"
 #include "Engine.h"
 
+
+
 Bullet::Bullet(glm::vec2 initPosition,float initOrientation,glm::vec2 initSize,GLuint initTextureID) : GameObject2D(initPosition, initOrientation, initSize, initTextureID) 
 {
 	
 }
+
 
 void Bullet::update(double tDelta)
 {
@@ -31,4 +34,6 @@ void Bullet::update(double tDelta)
 	{
 		
 	}
+	
+
 }

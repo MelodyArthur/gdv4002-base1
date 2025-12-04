@@ -5,9 +5,10 @@
 class Bullet : public GameObject2D 
 {
 private:
-
+	unsigned long long particleNumber; // monotonically increasing particle index / number - used to set key
 public:
 	Bullet(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize, GLuint initTextureID);
+	~Bullet();
 
 	void update(double tDelta) override;
 };

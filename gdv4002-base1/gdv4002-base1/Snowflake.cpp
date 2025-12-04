@@ -23,5 +23,7 @@ void Snowflake::update(double tDelta)
 	position = position + velocity * (float)tDelta;
 	// 2. Non-physics bit for rotation
 	orientation += angleChangePerSecond * (float)tDelta;
+
+
 }
 

@@ -9,12 +9,13 @@
 
 // Function prototypes
 void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods); 
-void deleteSnowflakes(GLFWwindow* window, double tDelta);
+void deleteBullets(GLFWwindow* window, double tDelta);
 
 // Globals
 std::bitset<5> keys{ 0x0 };
 Player* mainPlayer = nullptr;
 glm::vec2 gravity = glm::vec2(0.0f, -0.005f);
+
 
 
 
@@ -31,14 +32,25 @@ void spawnBullet()
 
 	}
 	Bullet* bullet = new Bullet(spawnPos, forward, glm::vec2(0.1f, 0.1f), bulletTexture);
-	std::string name = "bullet" + std::to_string(++bulletCounter);
-	addObject(name.c_str(), bullet);
+	//std::string name = "bullet" + std::to_string(++bulletCounter);
+	
+	std::string key = std::string("bullet");
+	if (bulletCounter > 0) { // first name in collection must not be numbered if using this approach
+
+		// add value so unique anyway - not using engine mechanism
+		key += std::to_string(bulletCounter);
+	}
+	addObject(key.c_str(), bullet);
+
+	bulletCounter++;
+
+	//listGameObjectKeys();
+	//listObjectCounts();
+
 }
 
 int main(void) 
 {
-	
-
 	int initResult = engineInit("GDV4002 - Applied Maths for Games", 512, 512, 10.0f);//create the window
 	if (initResult != 0) 
 	{
@@ -67,12 +79,12 @@ int main(void)
 		glm::vec2(getViewplaneWidth() / 2.0f, 0.0f),
 		0.05f);
 
-	addObject("emitter", emitter);
+	//addObject("emitter", emitter);
 
 	
 	// Setup event handlers
 	setKeyboardHandler(myKeyboardHandler);
-	setUpdateFunction(deleteSnowflakes, false);
+	setUpdateFunction(deleteBullets, false);
 
 	engineMainLoop();// Enter main loop - this handles update and render calls
 	engineShutdown();// When we quit (close window for example), clean up engine resources
@@ -81,15 +93,15 @@ int main(void)
 	return 0;
 }
 
-void deleteSnowflakes(GLFWwindow* window, double tDelta)
+void deleteBullets(GLFWwindow* window, double tDelta)
 {
-	GameObjectCollection snowflakes = getObjectCollection("snowflake");
+	GameObjectCollection bullet = getObjectCollection("bullet");
 
-	for (int i = 0; i < snowflakes.objectCount; i++) {
+	for (int i = 0; i < bullet.objectCount; i++) {
 
-		if (snowflakes.objectArray[i]->position.y < -(getViewplaneHeight() / 2.0f)) {
+		if (bullet.objectArray[i]->position.y < -(getViewplaneHeight() / 2.0f)) {
 
-			deleteObject(snowflakes.objectArray[i]);
+     			deleteObject(bullet.objectArray[i]);
 		}
 	}
 }//with the new version of enimge we need to get the collection of snowflakes and loop through them to delete them if they go off screen

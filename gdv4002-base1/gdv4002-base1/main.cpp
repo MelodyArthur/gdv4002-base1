@@ -3,14 +3,18 @@
 #include "Bullet.h"
 #include "Engine.h"
 #include "Keys.h" 
+#include "Emitter.h"
+#include "Snowflake.h"
 #include <bitset>
 
 // Function prototypes
 void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods); 
+void deleteSnowflakes(GLFWwindow* window, double tDelta);
 
 // Globals
 std::bitset<5> keys{ 0x0 };
 Player* mainPlayer = nullptr;
+glm::vec2 gravity = glm::vec2(0.0f, -0.005f);
 
 
 
@@ -33,6 +37,8 @@ void spawnBullet()
 
 int main(void) 
 {
+	
+
 	int initResult = engineInit("GDV4002 - Applied Maths for Games", 512, 512, 10.0f);//create the window
 	if (initResult != 0) 
 	{
@@ -56,14 +62,37 @@ int main(void)
 	addObject("enemy2", enemy2);
 	addObject("enemy3", enemy3);//add enemy objects to engine
 
+	Emitter* emitter = new Emitter(
+		glm::vec2(0.0f, getViewplaneHeight() / 2.0f * 1.2f),
+		glm::vec2(getViewplaneWidth() / 2.0f, 0.0f),
+		0.05f);
+
+	addObject("emitter", emitter);
+
+	
 	// Setup event handlers
 	setKeyboardHandler(myKeyboardHandler);
+	setUpdateFunction(deleteSnowflakes, false);
+
 	engineMainLoop();// Enter main loop - this handles update and render calls
 	engineShutdown();// When we quit (close window for example), clean up engine resources
 
 	listGameObjectKeys();//list all object keys in engine
 	return 0;
 }
+
+void deleteSnowflakes(GLFWwindow* window, double tDelta)
+{
+	GameObjectCollection snowflakes = getObjectCollection("snowflake");
+
+	for (int i = 0; i < snowflakes.objectCount; i++) {
+
+		if (snowflakes.objectArray[i]->position.y < -(getViewplaneHeight() / 2.0f)) {
+
+			deleteObject(snowflakes.objectArray[i]);
+		}
+	}
+}//with the new version of enimge we need to get the collection of snowflakes and loop through them to delete them if they go off screen
 
 //----------------------------boring keyboard stuff-------------------------
 void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods)

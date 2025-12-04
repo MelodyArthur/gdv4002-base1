@@ -16,9 +16,6 @@ std::bitset<5> keys{ 0x0 };
 Player* mainPlayer = nullptr;
 glm::vec2 gravity = glm::vec2(0.0f, -0.005f);
 
-
-
-
 void spawnBullet()
 {
 	static int bulletCounter = 0;
@@ -99,9 +96,21 @@ void deleteBullets(GLFWwindow* window, double tDelta)
 
 	for (int i = 0; i < bullet.objectCount; i++) {
 
-		if (bullet.objectArray[i]->position.y < -(getViewplaneHeight() / 2.0f)) {
-
+		if (bullet.objectArray[i]->position.y < - (getViewplaneHeight() / 4.0f))
+		{
      			deleteObject(bullet.objectArray[i]);
+		}
+		else if(bullet.objectArray[i]->position.x > (getViewplaneWidth() / 4.0f))
+		{
+ 			deleteObject(bullet.objectArray[i]);
+		}
+		else if (bullet.objectArray[i]->position.y > (getViewplaneHeight() / 4.0f))
+		{
+			deleteObject(bullet.objectArray[i]);
+		}
+		else if (bullet.objectArray[i]->position.x <  - (getViewplaneWidth() / 4.0f))
+		{
+			deleteObject(bullet.objectArray[i]);
 		}
 	}
 }//with the new version of enimge we need to get the collection of snowflakes and loop through them to delete them if they go off screen

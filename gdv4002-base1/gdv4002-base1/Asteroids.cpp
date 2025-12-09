@@ -41,3 +41,5 @@ void Enemy::update(double tDelta)
 	}
 }
 //orientation += glm::radians(145.0f) * (float)tDelta;
+
+// set the initial velocity as a value and make it change depending on the mass of the asteroid

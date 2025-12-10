@@ -6,12 +6,12 @@
 #include "Emitter.h"
 #include <bitset>
 
-// Function prototypes
+//---------------------------Function prototypes---------------------------
 void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods); 
 void deleteBullets(GLFWwindow* window, double tDelta);
 void deleteEnemies(GLFWwindow* window, double tDelta);
 
-// Globals
+//---------------------------Global Variables-----------------------------
 std::bitset<5> keys{ 0x0 };
 Player* mainPlayer = nullptr;
 float g1 = (getViewplaneHeight() / 2.0f);
@@ -21,27 +21,26 @@ glm::vec2 gravity = glm::vec2(g1, g2);
 void spawnBullet()
 {
 	static int bulletCounter = 0;
-	GLuint bulletTexture = loadTexture("Resources\\Textures\\bullet.png");
-	glm::vec2 spawnPos = glm::vec2(0.0f, 0.3f);
-	float forward = 0.0f;
+	GLuint bulletTexture = loadTexture("Resources\\Textures\\bullet.png");//load bullet texture
+	glm::vec2 spawnPos = glm::vec2(0.0f, 0.3f);//sets default spawn position
+	float forward = 0.0f;//sets default forward direction
 	if (mainPlayer) 
 	{
 		spawnPos = mainPlayer->position;
 		forward = mainPlayer ->orientation;
+	}//get player position and orientation
 
-	}
-	Bullet* bullet = new Bullet(spawnPos, forward, glm::vec2(0.1f, 0.1f), bulletTexture);
+	Bullet* bullet = new Bullet(spawnPos, forward, glm::vec2(0.1f, 0.1f), bulletTexture);//create new bullet object
 	//std::string name = "bullet" + std::to_string(++bulletCounter);
 	
-	std::string key = std::string("bullet");
-	if (bulletCounter > 0) { // first name in collection must not be numbered if using this approach
-
-		// add value so unique anyway - not using engine mechanism
-		key += std::to_string(bulletCounter);
+	std::string key = std::string("bullet");// base key name
+	if (bulletCounter > 0) // first name in collection must not be numbered if using this approach
+	{ 
+		key += std::to_string(bulletCounter); // add value so unique anyway - not using engine mechanism
 	}
 	addObject(key.c_str(), bullet);
 
-	bulletCounter++;
+	bulletCounter++;//increment bullet counter for unique naming
 
 	//listGameObjectKeys();
 	//listObjectCounts();
@@ -50,7 +49,8 @@ void spawnBullet()
 
 int main(void) 
 {
-	int initResult = engineInit("GDV4002 - Applied Maths for Games", 512, 512, 10.0f);//create the window
+	//create the window
+	int initResult = engineInit("GDV4002 - Applied Maths for Games", 512, 512, 10.0f);
 	if (initResult != 0) 
 	{
 		printf("Cannot setup game window!!!\n");
@@ -62,26 +62,11 @@ int main(void)
 	GLuint playerTexture = loadTexture("Resources\\Textures\\player1_ship.png");
 	mainPlayer = new Player(glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), playerTexture, 1.0f);
 	addObject("player", mainPlayer);
-	
 
-	//// Create an enemy object and add it to the engine
-	//GLuint enemyTexture = loadTexture("Resources\\Textures\\Asteroid.jpg");//texture
-	//Enemy* enemy1 = new Enemy(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 2.0f);
-	//Enemy* enemy2 = new Enemy(glm::vec2(1.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 2.0f);
-	//Enemy* enemy3 = new Enemy(glm::vec2(2.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 2.0f);//enemy objects
-	//addObject("enemy1", enemy1);
-	//addObject("enemy2", enemy2);
-	//addObject("enemy3", enemy3);//add enemy objects to engine
-
-	Emitter* emitter = new Emitter(
-		glm::vec2(0.0f, getViewplaneHeight() / 2.0f * 1.2f),
-		glm::vec2(getViewplaneWidth() / 2.0f, 0.0f),
-		1.5f);
-
+	Emitter* emitter = new Emitter(glm::vec2(0.0f, getViewplaneHeight() / 2.0f * 1.2f), glm::vec2(getViewplaneWidth() / 2.0f, 0.0f), 1.5f);
 	addObject("emitter", emitter);
 
-	
-	// Setup event handlers
+	//------------------------------Event Handlers-------------------------------
 	setKeyboardHandler(myKeyboardHandler);
 	setUpdateFunction(deleteBullets, false);
 	setUpdateFunction(deleteEnemies, false);
@@ -92,7 +77,7 @@ int main(void)
 	listGameObjectKeys();//list all object keys in engine
 	return 0;
 }
-
+//----------------------------delete off-screen bullets-------------------------
 void deleteBullets(GLFWwindow* window, double tDelta)
 {
 	GameObjectCollection bullet = getObjectCollection("bullet");
@@ -103,7 +88,7 @@ void deleteBullets(GLFWwindow* window, double tDelta)
 		{
      			deleteObject(bullet.objectArray[i]);
 		}
-		else if(bullet.objectArray[i]->position.x > (getViewplaneWidth() / 4.0f))
+		/*else if(bullet.objectArray[i]->position.x > (getViewplaneWidth() / 4.0f))
 		{
  			deleteObject(bullet.objectArray[i]);
 		}
@@ -114,10 +99,10 @@ void deleteBullets(GLFWwindow* window, double tDelta)
 		else if (bullet.objectArray[i]->position.x <  - (getViewplaneWidth() / 4.0f))
 		{
 			deleteObject(bullet.objectArray[i]);
-		}
+		}*/
 	}
-}//with the new version of enimge we need to get the collection of snowflakes and loop through them to delete them if they go off screen
-
+}
+//----------------------------delete off-screen enemies-------------------------
 void deleteEnemies(GLFWwindow* window, double tDelta)
 {
 	GameObjectCollection enemy = getObjectCollection("Enemy");
@@ -127,8 +112,7 @@ void deleteEnemies(GLFWwindow* window, double tDelta)
 			deleteObject(enemy.objectArray[i]);
 		}
 	}
-}//with the new version of enimge we need to get the collection of snowflakes and loop through them to delete them if they go off screen
-
+}
 
 //----------------------------boring keyboard stuff-------------------------
 void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods)

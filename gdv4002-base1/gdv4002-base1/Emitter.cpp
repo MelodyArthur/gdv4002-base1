@@ -11,7 +11,7 @@ Emitter::Emitter(glm::vec2 initPosition, glm::vec2 initSize, float emitTimeInter
 	emitCounter = emitTimeInterval;
 	particleNumber = 0;
 
-	GLuint enemyTexture = loadTexture("Resources\\Textures\\alien01.png");
+	//GLuint enemyTexture = loadTexture("Resources\\Textures\\alien01.png");
 	// Obtain a seed for the random number engine
 	random_device rd;
 
@@ -42,7 +42,7 @@ void Emitter::update(double tDelta) {
 		float x = position.x + normDist(gen) * size.x;
 		float y = position.y + normDist(gen) * size.y;
 		float scale = scaleDist(gen);
-		float mass = 20.0;
+		float mass = 15.0;
 		float rotationSpeed = glm::radians(normDist(gen) * 45.0f);
 		
 

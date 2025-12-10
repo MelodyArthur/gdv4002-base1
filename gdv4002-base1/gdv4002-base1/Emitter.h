@@ -7,12 +7,12 @@ class Emitter : public GameObject2D
 {
 private:
 
-	float	emitTimeInterval = 3.0f;
+	float	emitTimeInterval = 1.0f;// seconds between particle emissions
 	float	emitCounter;
 
 	unsigned long long particleNumber; // monotonically increasing particle index / number - used to set key
 
-	GLuint	enemyTexture;
+	GLuint	enemyTexture;// texture for emitted particles
 	// Random number generator
 	std::mt19937 gen;
 

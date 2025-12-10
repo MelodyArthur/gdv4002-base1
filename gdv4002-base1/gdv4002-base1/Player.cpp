@@ -40,7 +40,7 @@ void Player::update(double tDelta)
 	velocity = velocity + (a * (float)tDelta);//integate to get new velocity
 	position = position + (velocity * (float)tDelta);//integate to get new position
 
-	// make the player wrap around the screen
+	//----------------make the player wrap around the screen----------------
 	if (position.x > getViewplaneHeight() / 2.0f)
 	{
 		position.x = -getViewplaneHeight() / 2.0f;

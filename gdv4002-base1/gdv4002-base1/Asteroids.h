@@ -2,7 +2,6 @@
 #include "GameObject2D.h"
 #include <glm/glm.hpp>
 
-extern glm::vec2 gravity;
 
 class Enemy : public GameObject2D {
 

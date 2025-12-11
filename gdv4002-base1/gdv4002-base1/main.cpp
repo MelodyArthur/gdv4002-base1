@@ -99,7 +99,7 @@ void deleteBullets(GLFWwindow* window, double tDelta)
 
 		if (bullet.objectArray[i]->position.y < - (getViewplaneHeight() / 4.0f))
 		{
-      			deleteObject(bullet.objectArray[i]);
+      		deleteObject(bullet.objectArray[i]);
 		}
 		else if(bullet.objectArray[i]->position.x > (getViewplaneWidth() / 4.0f))
 		{

@@ -17,23 +17,6 @@ void Bullet::update(double tDelta)
 	position.x += cos(orientation) * speed * (float)tDelta;
 	position.y += sin(orientation) * speed * (float)tDelta;
 	
-	//add code here to remove the bullet if it goes off-screen
-	if (position.x > getViewplaneHeight() / 4.0f)
-	{
-		
-	}
-	else if (position.x < -getViewplaneHeight() / 2.0f)
-	{
-		
-	}
-	else if (position.y < -getViewplaneHeight() / 2.0f)
-	{
-		
-	}
-	else if (position.y > getViewplaneHeight() / 2.0f)
-	{
-		
-	}
-	
+
 
 }

@@ -5,7 +5,7 @@ Enemy::Enemy(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize,G
 {
 	
 	this->mass = mass;
-	velocity = glm::vec2(15.0f, 15.0f); // default to 0 velocity
+	velocity = glm::vec2(0.0f, 0.0f); // default to 0 velocity
 	this->angleChangePerSecond = angleChangePerSecond;
 }
 void Enemy::update(double tDelta) 
@@ -17,19 +17,11 @@ void Enemy::update(double tDelta)
 	// 1.3. Update velocity
 	velocity = velocity + accel * (float)tDelta;
 
-	/*if (velocity.x > maxSpeed)
-	{
-		velocity.x = maxSpeed;
-	}
-	if (velocity.y > maxSpeed)
-	{
-		velocity.y = maxSpeed;
-	}*/
 
 	if(glm::length(velocity) > maxSpeed)
 	{
 		velocity = glm::normalize(velocity) * maxSpeed;
-	}//stops the disco lights
+	}//velocity clamp to max speed
 
 	// 1.4. Update position
 	position = position + velocity * (float)tDelta;

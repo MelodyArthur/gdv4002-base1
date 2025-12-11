@@ -31,14 +31,21 @@ void Emitter::render() {}
 void Emitter::update(double tDelta) {
 
 	emitCounter += (float)tDelta;
-
-	if (emitCounter >= emitTimeInterval) {
+	float maxAsteroids = getObjectCounts("Enemy");
+	if (maxAsteroids >= 5)
+	{
+		return; // do not emit more if we have reached max
+	}
+	// Check if it's time to emit a new particle
+	if (emitCounter >= emitTimeInterval) 
+	{
 
 		// decrease emitCounter by emitTimeInterval - don't set to 0 as this would ignore the case where multiple particles are needed.
 		emitCounter -= emitTimeInterval;
 
+
 		// Create new particle
-		GLuint enemyTexture = loadTexture("Resources\\Textures\\mcblock01.png");
+		GLuint enemyTexture = loadTexture("Resources\\Textures\\Asteroid.jpg");
 		float x = position.x + normDist(gen) * size.x;
 		float y = position.y + normDist(gen) * size.y;
 		float scale = scaleDist(gen);
@@ -46,7 +53,7 @@ void Emitter::update(double tDelta) {
 		float rotationSpeed = glm::radians(normDist(gen) * 45.0f);
 		
 
-		Enemy* s1 = new Enemy(glm::vec2(x, y), 0.0f, glm::vec2(scale, scale), mass, rotationSpeed, 20.0f);
+		Enemy* s1 = new Enemy(glm::vec2(x, y), 0.0f, glm::vec2(scale, scale), enemyTexture, mass, rotationSpeed);
 		string key = string("Enemy");
 
 		if (particleNumber > 0) { // first name in collection must not be numbered if using this approach

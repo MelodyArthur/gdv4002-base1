@@ -9,7 +9,7 @@
 //---------------------------Function prototypes---------------------------
 void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods); 
 void deleteBullets(GLFWwindow* window, double tDelta);
-void deleteEnemies(GLFWwindow* window, double tDelta);
+//void deleteEnemies(GLFWwindow* window, double tDelta);
 
 //---------------------------Global Variables-----------------------------
 std::bitset<5> keys{ 0x0 };
@@ -17,9 +17,20 @@ Player* mainPlayer = nullptr;
 float g1 = (getViewplaneHeight() / 2.0f);
 float g2 = (getViewplaneWidth() / 2.0f);
 glm::vec2 gravity = glm::vec2(g1, g2);
+static const double bulletCooldown = 0.5;//time between bullets(adjustable)
+static double lastBulletSpawnTime = -100000.0;//last time a bullet was spawned but allows first bullet to spawn
+
 
 void spawnBullet()
 {
+	//set the cooldown timer
+	double now = glfwGetTime();//get current time
+	if (now - lastBulletSpawnTime < bulletCooldown)
+	{
+		return; //cooldown not finished
+	}
+
+	//spawn the bullet
 	static int bulletCounter = 0;
 	GLuint bulletTexture = loadTexture("Resources\\Textures\\bullet.png");//load bullet texture
 	glm::vec2 spawnPos = glm::vec2(0.0f, 0.3f);//sets default spawn position
@@ -41,6 +52,7 @@ void spawnBullet()
 	addObject(key.c_str(), bullet);
 
 	bulletCounter++;//increment bullet counter for unique naming
+	lastBulletSpawnTime = now;//update last bullet spawn time
 
 	//listGameObjectKeys();
 	//listObjectCounts();
@@ -51,6 +63,7 @@ int main(void)
 {
 	//create the window
 	int initResult = engineInit("GDV4002 - Applied Maths for Games", 512, 512, 10.0f);
+	hideAxisLines();//hide axis lines for cleaner look
 	if (initResult != 0) 
 	{
 		printf("Cannot setup game window!!!\n");
@@ -69,7 +82,7 @@ int main(void)
 	//------------------------------Event Handlers-------------------------------
 	setKeyboardHandler(myKeyboardHandler);
 	setUpdateFunction(deleteBullets, false);
-	setUpdateFunction(deleteEnemies, false);
+	//setUpdateFunction(deleteEnemies, false);
 
 	engineMainLoop();// Enter main loop - this handles update and render calls
 	engineShutdown();// When we quit (close window for example), clean up engine resources
@@ -86,9 +99,9 @@ void deleteBullets(GLFWwindow* window, double tDelta)
 
 		if (bullet.objectArray[i]->position.y < - (getViewplaneHeight() / 4.0f))
 		{
-     			deleteObject(bullet.objectArray[i]);
+      			deleteObject(bullet.objectArray[i]);
 		}
-		/*else if(bullet.objectArray[i]->position.x > (getViewplaneWidth() / 4.0f))
+		else if(bullet.objectArray[i]->position.x > (getViewplaneWidth() / 4.0f))
 		{
  			deleteObject(bullet.objectArray[i]);
 		}
@@ -99,20 +112,20 @@ void deleteBullets(GLFWwindow* window, double tDelta)
 		else if (bullet.objectArray[i]->position.x <  - (getViewplaneWidth() / 4.0f))
 		{
 			deleteObject(bullet.objectArray[i]);
-		}*/
-	}
+		}
+	}//only listens to one if statement per run
 }
 //----------------------------delete off-screen enemies-------------------------
-void deleteEnemies(GLFWwindow* window, double tDelta)
-{
-	GameObjectCollection enemy = getObjectCollection("Enemy");
-	for (int i = 0; i < enemy.objectCount; i++) {
-		if (enemy.objectArray[i]->position.y < -(getViewplaneHeight() / 2.0f))
-		{
-			deleteObject(enemy.objectArray[i]);
-		}
-	}
-}
+//void deleteEnemies(GLFWwindow* window, double tDelta)
+//{
+//	GameObjectCollection enemy = getObjectCollection("Enemy");
+//	for (int i = 0; i < enemy.objectCount; i++) {
+//		if (enemy.objectArray[i]->position.y < -(getViewplaneHeight() / 2.0f))
+//		{
+//			deleteObject(enemy.objectArray[i]);
+//		}
+//	}
+//}
 
 //----------------------------boring keyboard stuff-------------------------
 void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods)

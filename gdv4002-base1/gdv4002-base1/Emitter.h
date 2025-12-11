@@ -7,7 +7,7 @@ class Emitter : public GameObject2D
 {
 private:
 
-	float	emitTimeInterval = 1.0f;// seconds between particle emissions
+	float	emitTimeInterval = 100.0f;// seconds between particle emissions
 	float	emitCounter;
 
 	unsigned long long particleNumber; // monotonically increasing particle index / number - used to set key

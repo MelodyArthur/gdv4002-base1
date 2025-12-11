@@ -19,7 +19,7 @@ float g2 = (getViewplaneWidth() / 2.0f);
 glm::vec2 gravity = glm::vec2(g1, g2);
 static const double bulletCooldown = 0.05;//time between bullets(adjustable)
 static double lastBulletSpawnTime = -100000.0;//last time a bullet was spawned but allows first bullet to spawn
-//
+
 
 void spawnBullet()
 {
@@ -42,7 +42,6 @@ void spawnBullet()
 	}//get player position and orientation
 
 	Bullet* bullet = new Bullet(spawnPos, forward, glm::vec2(0.1f, 0.1f), bulletTexture);//create new bullet object
-	//std::string name = "bullet" + std::to_string(++bulletCounter);
 	
 	std::string key = std::string("bullet");// base key name
 	if (bulletCounter > 0) // first name in collection must not be numbered if using this approach
@@ -50,12 +49,8 @@ void spawnBullet()
 		key += std::to_string(bulletCounter); // add value so unique anyway - not using engine mechanism
 	}
 	addObject(key.c_str(), bullet);
-	printf("%d : %s\n", bulletCounter, key.c_str());//debug print bullet spawn
 	bulletCounter++;//increment bullet counter for unique naming
 	lastBulletSpawnTime = now;//update last bullet spawn time
-
-	//listGameObjectKeys();
-	//listObjectCounts();
 
 }
 
@@ -97,19 +92,19 @@ void deleteBullets(GLFWwindow* window, double tDelta)
 
 	for (int i = 0; i < bullet.objectCount; i++) {
 
-		if (bullet.objectArray[i]->position.y < - (getViewplaneHeight() / 4.0f))
+		if (bullet.objectArray[i]->position.y < - (getViewplaneHeight() / 2.0f))
 		{
       		deleteObject(bullet.objectArray[i]);
 		}
-		else if(bullet.objectArray[i]->position.x > (getViewplaneWidth() / 4.0f))
+		else if(bullet.objectArray[i]->position.x > (getViewplaneWidth() / 2.0f))
 		{
    			deleteObject(bullet.objectArray[i]);
 		}
-		else if (bullet.objectArray[i]->position.y > (getViewplaneHeight() / 4.0f))
+		else if (bullet.objectArray[i]->position.y > (getViewplaneHeight() / 2.0f))
 		{
 			deleteObject(bullet.objectArray[i]);
 		}
-		else if (bullet.objectArray[i]->position.x <  - (getViewplaneWidth() / 4.0f))
+		else if (bullet.objectArray[i]->position.x <  - (getViewplaneWidth() / 2.0f))
 		{
 			deleteObject(bullet.objectArray[i]);
 		}

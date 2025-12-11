@@ -17,9 +17,9 @@ Player* mainPlayer = nullptr;
 float g1 = (getViewplaneHeight() / 2.0f);
 float g2 = (getViewplaneWidth() / 2.0f);
 glm::vec2 gravity = glm::vec2(g1, g2);
-static const double bulletCooldown = 0.5;//time between bullets(adjustable)
+static const double bulletCooldown = 0.05;//time between bullets(adjustable)
 static double lastBulletSpawnTime = -100000.0;//last time a bullet was spawned but allows first bullet to spawn
-
+//
 
 void spawnBullet()
 {
@@ -50,7 +50,7 @@ void spawnBullet()
 		key += std::to_string(bulletCounter); // add value so unique anyway - not using engine mechanism
 	}
 	addObject(key.c_str(), bullet);
-
+	printf("%d : %s\n", bulletCounter, key.c_str());//debug print bullet spawn
 	bulletCounter++;//increment bullet counter for unique naming
 	lastBulletSpawnTime = now;//update last bullet spawn time
 
@@ -103,7 +103,7 @@ void deleteBullets(GLFWwindow* window, double tDelta)
 		}
 		else if(bullet.objectArray[i]->position.x > (getViewplaneWidth() / 4.0f))
 		{
- 			deleteObject(bullet.objectArray[i]);
+   			deleteObject(bullet.objectArray[i]);
 		}
 		else if (bullet.objectArray[i]->position.y > (getViewplaneHeight() / 4.0f))
 		{
@@ -113,7 +113,7 @@ void deleteBullets(GLFWwindow* window, double tDelta)
 		{
 			deleteObject(bullet.objectArray[i]);
 		}
-	}//only listens to one if statement per run
+	}//note: only listens to one if statement per run
 }
 //----------------------------delete off-screen enemies-------------------------
 //void deleteEnemies(GLFWwindow* window, double tDelta)

@@ -13,23 +13,23 @@ Bullet::Bullet(glm::vec2 initPosition,float initOrientation,glm::vec2 initSize,G
 
 void Bullet::update(double tDelta)
 {
+	//---------------------update position and orientation---------------------
+	// 1. Physics bit for movement
+	float accel = (2.5f / mass);
+	// 1.3. Update velocity
+	velocity = velocity + accel * (float)tDelta;
+
 	// Move the bullet forward in the direction it is facing
-	float speed = 5.0f; // Set a constant speed for the bullet
-	position.x += cos(orientation) * speed * (float)tDelta;
-	position.y += sin(orientation) * speed * (float)tDelta;
+	//float speed = 5.0f; // Set a constant speed for the bullet
+	position.x += cos(orientation) * velocity.x * (float)tDelta;
+	position.y += sin(orientation) * velocity.y * (float)tDelta;
 	
-	//float maxSpeed = 1.0f;
-	////---------------------update position and orientation---------------------
-	//// 1. Physics bit for movement
-	//float accel = (20.0f / mass);
-	//// 1.3. Update velocity
-	//velocity = velocity + accel * (float)tDelta;
+	float maxSpeed = 10.0f;
 
-
-	////if (glm::length(velocity) > maxSpeed)
-	////{
-	////	velocity = glm::normalize(velocity) * maxSpeed;
-	////}//velocity clamp to max speed
+	if (glm::length(velocity) > maxSpeed)
+	{
+		velocity = glm::normalize(velocity) * maxSpeed;
+	}//velocity clamp to max speed
 
 	
 	

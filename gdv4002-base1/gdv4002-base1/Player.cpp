@@ -38,7 +38,7 @@ void Player::update(double tDelta)
 	//----------------position, velocity and acceleration update----------------
 	glm::vec2 a = F * (1.0f / mass);//calculate acceleration.If f = ma, a = f / m
 	velocity = velocity + (a * (float)tDelta);//integate to get new velocity
-	position = position + (velocity * (float)tDelta);//integate to get new position
+	position = position + (velocity * (float)tDelta);//intergate to get new position
 
 	//----------------make the player wrap around the screen----------------
 	if (position.x > getViewplaneHeight() / 2.0f)

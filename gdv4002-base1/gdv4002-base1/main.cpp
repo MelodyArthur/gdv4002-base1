@@ -17,7 +17,7 @@ Player* mainPlayer = nullptr;
 float g1 = (getViewplaneHeight() / 2.0f);
 float g2 = (getViewplaneWidth() / 2.0f);
 glm::vec2 gravity = glm::vec2(g1, g2);
-static const double bulletCooldown = 0.05;//time between bullets(adjustable)
+static const double bulletCooldown = 0.2;//time between bullets(adjustable)
 static double lastBulletSpawnTime = -100000.0;//last time a bullet was spawned but allows first bullet to spawn
 
 

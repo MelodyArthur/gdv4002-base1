@@ -63,9 +63,6 @@
     <ClCompile Include="Emitter.cpp">
       <Filter>Emitter</Filter>
     </ClCompile>
-    <ClCompile Include="Snowflake.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -103,9 +100,6 @@
     </ClInclude>
     <ClInclude Include="Emitter.h">
       <Filter>Emitter</Filter>
-    </ClInclude>
-    <ClInclude Include="Snowflake.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

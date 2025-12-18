@@ -9,7 +9,7 @@
 //---------------------------Function prototypes---------------------------
 void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods); 
 void deleteBullets(GLFWwindow* window, double tDelta);
-//void deleteEnemies(GLFWwindow* window, double tDelta);
+
 
 //---------------------------Global Variables-----------------------------
 std::bitset<5> keys{ 0x0 };
@@ -77,7 +77,6 @@ int main(void)
 	//------------------------------Event Handlers-------------------------------
 	setKeyboardHandler(myKeyboardHandler);
 	setUpdateFunction(deleteBullets, false);
-	//setUpdateFunction(deleteEnemies, false);
 
 	engineMainLoop();// Enter main loop - this handles update and render calls
 	engineShutdown();// When we quit (close window for example), clean up engine resources
@@ -108,19 +107,8 @@ void deleteBullets(GLFWwindow* window, double tDelta)
 		{
 			deleteObject(bullet.objectArray[i]);
 		}
-	}//note: only listens to one if statement per run
+	}//Deletes bullets when they go off screen
 }
-//----------------------------delete off-screen enemies-------------------------
-//void deleteEnemies(GLFWwindow* window, double tDelta)
-//{
-//	GameObjectCollection enemy = getObjectCollection("Enemy");
-//	for (int i = 0; i < enemy.objectCount; i++) {
-//		if (enemy.objectArray[i]->position.y < -(getViewplaneHeight() / 2.0f))
-//		{
-//			deleteObject(enemy.objectArray[i]);
-//		}
-//	}
-//}
 
 //----------------------------boring keyboard stuff-------------------------
 void myKeyboardHandler(GLFWwindow* window, int key, int scancode, int action, int mods)

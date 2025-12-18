@@ -15,16 +15,15 @@ void Bullet::update(double tDelta)
 {
 	//---------------------update position and orientation---------------------
 	// 1. Physics bit for movement
-	float accel = (2.5f / mass);
+	float accel = (2.5f / mass);//how fast it speeds up
 	// 1.3. Update velocity
 	velocity = velocity + accel * (float)tDelta;
 
 	// Move the bullet forward in the direction it is facing
-	//float speed = 5.0f; // Set a constant speed for the bullet
-	position.x += cos(orientation) * velocity.x * (float)tDelta;
-	position.y += sin(orientation) * velocity.y * (float)tDelta;
+	position.x += cos(orientation) * velocity.x * (float)tDelta;//update x position using velocity
+	position.y += sin(orientation) * velocity.y * (float)tDelta;//update y position using velocity
 	
-	float maxSpeed = 10.0f;
+	float maxSpeed = 10.0f;//max speed for bullet (changeable)
 
 	if (glm::length(velocity) > maxSpeed)
 	{

@@ -13,8 +13,8 @@ Player::Player(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize
 
 void Player::update(double tDelta) 
 {
-	glm::vec2 F = glm::vec2(0.0f, 0.0f);
-	const float thrust = 2.0f;
+	glm::vec2 F = glm::vec2(0.0f, 0.0f);//initialize force vector
+	const float thrust = 2.0f;//thrust force applied when key is pressed
 
 	//-------------------------------Make the ship move-----------------------------
 	if (keys.test(Key::W) == true) {
@@ -38,7 +38,8 @@ void Player::update(double tDelta)
 	//----------------position, velocity and acceleration update----------------
 	glm::vec2 a = F * (1.0f / mass);//calculate acceleration.If f = ma, a = f / m
 	velocity = velocity + (a * (float)tDelta);//integate to get new velocity
-	position = position + (velocity * (float)tDelta);//intergate to get new position
+	position = position + (velocity * (float)tDelta);//integate to get new position
+
 
 	//----------------make the player wrap around the screen----------------
 	if (position.x > getViewplaneHeight() / 2.0f)

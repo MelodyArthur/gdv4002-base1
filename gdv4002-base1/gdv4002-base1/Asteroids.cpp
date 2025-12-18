@@ -4,16 +4,16 @@
 Enemy::Enemy(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize,GLuint initTextureID,float mass, float angleChangePerSecond): GameObject2D(initPosition, initOrientation, initSize, initTextureID) 
 {
 	
-	this->mass = mass;
+	this->mass = mass;//set mass
 	velocity = glm::vec2(0.0f, 0.0f); // default to 0 velocity
-	this->angleChangePerSecond = angleChangePerSecond;
+	this->angleChangePerSecond = angleChangePerSecond;//how fast it rotates
 }
 void Enemy::update(double tDelta) 
 {
-	float maxSpeed = 1.0f;
+	float maxSpeed = 3.0f;//max speed for enemy
 	//---------------------update position and orientation---------------------
 	// 1. Physics bit for movement
-	float accel = (20.0f / mass);
+	float accel = (5.0f / mass);//how fast it speeds up
 	// 1.3. Update velocity
 	velocity = velocity + accel * (float)tDelta;
 
@@ -26,7 +26,7 @@ void Enemy::update(double tDelta)
 	// 1.4. Update position
 	position = position + velocity * (float)tDelta;
 	// 2. Non-physics bit for rotation
-	orientation += angleChangePerSecond * (float)tDelta;
+	orientation += velocity.x * (float)tDelta;//rotate based on x velocity
 
 	
 
@@ -49,9 +49,3 @@ void Enemy::update(double tDelta)
 		position.y = (- getViewplaneHeight() / 2.0f);
 	}
 }
-
-
-
-//orientation += glm::radians(145.0f) * (float)tDelta;
-
-// set the initial velocity as a value and make it change depending on the mass of the asteroid

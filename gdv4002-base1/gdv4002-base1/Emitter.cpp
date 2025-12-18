@@ -36,6 +36,7 @@ void Emitter::update(double tDelta) {
 	{
 		return; // do not emit more if we have reached max
 	}
+
 	// Check if it's time to emit a new particle
 	if (emitCounter >= emitTimeInterval) 
 	{
@@ -44,16 +45,13 @@ void Emitter::update(double tDelta) {
 		emitCounter -= emitTimeInterval;
 
 
-		// Create new particle
+		// spawn in the enemies
 		GLuint enemyTexture = loadTexture("Resources\\Textures\\Asteroid.jpg");
-		float x = position.x + normDist(gen) * size.x;
-		float y = position.y + normDist(gen) * size.y;
-		float scale = scaleDist(gen);
-		float mass = 15.0;
-		float rotationSpeed = glm::radians(normDist(gen) * 45.0f);
-		
-
-		Enemy* s1 = new Enemy(glm::vec2(x, y), 0.0f, glm::vec2(scale, scale), enemyTexture, mass, rotationSpeed);
+		float x = position.x + normDist(gen) * size.x;// random x position within emitter width
+		float y = position.y + normDist(gen) * size.y;// random y position within emitter height
+		float scale = scaleDist(gen);// random size for enemy
+		float mass = 15.0;//set mass for enemy
+		Enemy* s1 = new Enemy(glm::vec2(x, y), 0.0f, glm::vec2(scale, scale), enemyTexture, mass, orientation);
 		string key = string("Enemy");
 
 		if (particleNumber > 0) { // first name in collection must not be numbered if using this approach

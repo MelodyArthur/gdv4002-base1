@@ -73,7 +73,7 @@ int main(void)
 
 	Emitter* emitter = new Emitter(glm::vec2(0.0f, getViewplaneHeight() / 2.0f * 1.2f),
 								   glm::vec2(getViewplaneWidth() / 2.0f, 0.0f), 1.5f);
-	//addObject("emitter", emitter);
+	addObject("emitter", emitter);
 
 	//------------------------------Event Handlers-------------------------------
 	setKeyboardHandler(myKeyboardHandler);

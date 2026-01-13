@@ -17,7 +17,6 @@ void Enemy::update(double tDelta)
 	// 1.3. Update velocity
 	velocity = velocity + accel * (float)tDelta;
 
-
 	if(glm::length(velocity) > maxSpeed)
 	{
 		velocity = glm::normalize(velocity) * maxSpeed;
@@ -27,9 +26,6 @@ void Enemy::update(double tDelta)
 	position = position + velocity * (float)tDelta;
 	// 2. Non-physics bit for rotation
 	orientation += velocity.x * (float)tDelta;//rotate based on x velocity
-
-	
-
 
 	//---------------------make the enemy wrap around the screen---------------------
 	if (position.x > getViewplaneHeight() / 2.0f)

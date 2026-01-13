@@ -17,7 +17,7 @@ Player* mainPlayer = nullptr;
 float g1 = (getViewplaneHeight() / 2.0f);
 float g2 = (getViewplaneWidth() / 2.0f);
 glm::vec2 gravity = glm::vec2(g1, g2);
-static const double bulletCooldown = 0.2;//time between bullets(adjustable)
+static const double bulletCooldown = 0.5;//time between bullets(adjustable)
 static double lastBulletSpawnTime = -100000.0;//last time a bullet was spawned but allows first bullet to spawn
 
 
@@ -71,8 +71,9 @@ int main(void)
 	mainPlayer = new Player(glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), playerTexture, 1.0f);
 	addObject("player", mainPlayer);
 
-	Emitter* emitter = new Emitter(glm::vec2(0.0f, getViewplaneHeight() / 2.0f * 1.2f), glm::vec2(getViewplaneWidth() / 2.0f, 0.0f), 1.5f);
-	addObject("emitter", emitter);
+	Emitter* emitter = new Emitter(glm::vec2(0.0f, getViewplaneHeight() / 2.0f * 1.2f),
+								   glm::vec2(getViewplaneWidth() / 2.0f, 0.0f), 1.5f);
+	//addObject("emitter", emitter);
 
 	//------------------------------Event Handlers-------------------------------
 	setKeyboardHandler(myKeyboardHandler);

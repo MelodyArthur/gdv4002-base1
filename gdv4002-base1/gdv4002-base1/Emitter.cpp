@@ -11,7 +11,7 @@ Emitter::Emitter(glm::vec2 initPosition, glm::vec2 initSize, float emitTimeInter
 	emitCounter = emitTimeInterval;
 	particleNumber = 0;
 
-	//GLuint enemyTexture = loadTexture("Resources\\Textures\\alien01.png");
+	
 	// Obtain a seed for the random number engine
 	random_device rd;
 
@@ -40,17 +40,15 @@ void Emitter::update(double tDelta) {
 	// Check if it's time to emit a new particle
 	if (emitCounter >= emitTimeInterval) 
 	{
-
 		// decrease emitCounter by emitTimeInterval - don't set to 0 as this would ignore the case where multiple particles are needed.
 		emitCounter -= emitTimeInterval;
-
 
 		// spawn in the enemies
 		GLuint enemyTexture = loadTexture("Resources\\Textures\\Asteroid.jpg");
 		float x = position.x + normDist(gen) * size.x;// random x position within emitter width
 		float y = position.y + normDist(gen) * size.y;// random y position within emitter height
 		float scale = scaleDist(gen);// random size for enemy
-		float mass = 15.0;//set mass for enemy
+		float mass = massDist(gen);//random mass for enemy
 		Enemy* s1 = new Enemy(glm::vec2(x, y), 0.0f, glm::vec2(scale, scale), enemyTexture, mass, orientation);
 		string key = string("Enemy");
 
